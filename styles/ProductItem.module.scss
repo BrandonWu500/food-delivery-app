@@ -1,0 +1,35 @@
+@import './variables';
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1em;
+
+  .imgContainer {
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .img {
+    object-fit: contain;
+  }
+
+  h2 {
+    color: $bg-primary-color;
+  }
+
+  .price {
+    color: $text-primary-dark;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .desc {
+    line-height: 1.6;
+    color: $text-primary-neutral;
+  }
+}

@@ -1,0 +1,87 @@
+@import './variables';
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 2em;
+
+  .imgContainer {
+    position: relative;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    p {
+      max-width: 40ch;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      color: $bg-primary-color;
+      border-bottom: 1px solid $bg-primary-color;
+      align-self: flex-start;
+    }
+
+    .group {
+      display: flex;
+      align-items: flex-start;
+      gap: 1em;
+    }
+
+    .inputGroup {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+
+      input {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+
+    button {
+      position: relative;
+      padding: 1em;
+      background-color: transparent;
+      border: 0;
+      font-size: 1rem;
+    }
+    .badge {
+      position: absolute;
+      top: 1rem;
+      right: 0;
+      background-color: $bg-accent;
+      color: $text-primary-color;
+      padding: 0 0.5em;
+      border-radius: 100vh;
+      font-size: 0.8rem;
+    }
+
+    .submitGroup {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin-top: 2em;
+
+      input {
+        width: 4rem;
+        height: 100%;
+        font-size: 1rem;
+        padding-left: 0.5em;
+      }
+      button {
+        background-color: $bg-primary-color;
+        color: $text-primary-color;
+        padding: 0.5em;
+      }
+    }
+  }
+}

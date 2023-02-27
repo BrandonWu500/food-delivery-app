@@ -1,5 +1,6 @@
 import navStyles from '@/styles/Navbar.module.scss';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
@@ -17,7 +18,9 @@ const Navbar = () => {
       </div>
       <div className={navStyles.item}>
         <ul>
-          <li>Homepage</li>
+          <li>
+            <Link href="/">Homepage</Link>
+          </li>
           <li>Products</li>
           <li>Menu</li>
           <li>
