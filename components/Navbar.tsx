@@ -32,10 +32,12 @@ const Navbar = () => {
         </ul>
       </div>
       <div className={navStyles.item}>
-        <div className={navStyles.cart}>
-          <Image src="/images/cart.png" alt="" width={32} height={32} />
-          <div className={navStyles.badge}>2</div>
-        </div>
+        <Link href="/cart">
+          <div className={navStyles.cart}>
+            <Image src="/images/cart.png" alt="" width={32} height={32} />
+            <div className={navStyles.badge}>2</div>
+          </div>
+        </Link>
       </div>
     </nav>
   );

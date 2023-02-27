@@ -4,11 +4,12 @@
   height: 100vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding: 2em;
+  padding: 4em;
 
   .imgContainer {
     position: relative;
-
+    display: flex;
+    justify-content: center;
     img {
       object-fit: contain;
     }
@@ -33,13 +34,15 @@
     .group {
       display: flex;
       align-items: flex-start;
-      gap: 1em;
+      gap: 2em;
+      flex-wrap: wrap;
     }
 
     .inputGroup {
       display: flex;
       align-items: center;
       gap: 0.5em;
+      margin-top: 1em;
 
       input {
         width: 1.5rem;
@@ -50,6 +53,7 @@
     button {
       position: relative;
       padding: 1em;
+      padding-left: 0;
       background-color: transparent;
       border: 0;
       font-size: 1rem;

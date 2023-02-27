@@ -1,0 +1,62 @@
+@import './variables';
+
+.container {
+  padding: 4em;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+
+  table {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    border-spacing: 2em;
+  }
+
+  th {
+    text-transform: capitalize;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  td:nth-of-type(2) {
+    color: $bg-primary-color;
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+
+  td:last-of-type {
+    font-weight: 700;
+  }
+
+  .summary {
+    padding: 2em;
+    background-color: $bg-dark;
+    color: $text-primary-color;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .wrapper {
+      line-height: 2;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+
+    button {
+      color: $bg-primary-color;
+      font-weight: 700;
+      padding: 1em;
+      align-self: flex-start;
+    }
+  }
+}
