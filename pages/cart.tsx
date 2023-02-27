@@ -1,3 +1,4 @@
+import OrderSummary from '@/components/OrderSummary';
 import { server } from '@/config';
 import cartStyles from '@/styles/Cart.module.scss';
 import Image from 'next/image';
@@ -69,24 +70,7 @@ const cart = ({ cart }: CartProps) => {
           ))}
         </tbody>
       </table>
-      <section className={cartStyles.summary}>
-        <h1>CART TOTAL</h1>
-        <div className={cartStyles.wrapper}>
-          <div className={cartStyles.group}>
-            <h3>Subtotal: </h3>
-            <p>{'$' + subtotal}</p>
-          </div>
-          <div className={cartStyles.group}>
-            <h3>Discount: </h3>
-            <p>$0.00</p>
-          </div>
-          <div className={cartStyles.group}>
-            <h3>Total: </h3>
-            <p>{'$' + subtotal}</p>
-          </div>
-        </div>
-        <button>CHECKOUT NOW</button>
-      </section>
+      <OrderSummary subtotal={subtotal} />
     </div>
   );
 };

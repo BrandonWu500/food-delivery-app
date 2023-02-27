@@ -1,0 +1,68 @@
+.container {
+  padding: 4em;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2em;
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  justify-content: space-between;
+  gap: 2em;
+
+  h2 {
+    text-transform: capitalize;
+  }
+}
+
+.infoGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.done {
+  opacity: 1;
+  .checkedIcon {
+    visibility: visible;
+  }
+}
+
+.progress {
+  animation: progress 1s ease infinite alternate;
+}
+
+@keyframes progress {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.incomplete,
+.progress {
+  opacity: 0.3;
+  .checkedIcon {
+    visibility: hidden;
+  }
+}

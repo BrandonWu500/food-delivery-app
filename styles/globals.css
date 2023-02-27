@@ -28,6 +28,7 @@ button {
 button:hover {
   transform: scale(0.98);
 }
+
 /* utility classes */
 .flex {
   display: flex;

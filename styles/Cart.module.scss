@@ -29,34 +29,4 @@
   td:last-of-type {
     font-weight: 700;
   }
-
-  .summary {
-    padding: 2em;
-    background-color: $bg-dark;
-    color: $text-primary-color;
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-
-    h1 {
-      font-size: 2rem;
-    }
-
-    .wrapper {
-      line-height: 2;
-    }
-
-    .group {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-    }
-
-    button {
-      color: $bg-primary-color;
-      font-weight: 700;
-      padding: 1em;
-      align-self: flex-start;
-    }
-  }
 }

@@ -81,3 +81,27 @@ export const cartItems = [
     total: 22.99,
   },
 ];
+
+export const orderItems = [
+  {
+    id: 1,
+    customer: 'John Doe',
+    address: '760 Baker Ave.\nLittle Falls, NJ 07424',
+    total: 62.97,
+    status: 'paid',
+  },
+  {
+    id: 2,
+    customer: 'Jane Smith',
+    address: '25 Shady St.\nFairfax, VA 22030',
+    total: 42.17,
+    status: 'preparing',
+  },
+  {
+    id: 3,
+    customer: 'James Bond',
+    address: '53 Cedar St.\nSalem, MA 01970',
+    total: 32.92,
+    status: 'delivered',
+  },
+];

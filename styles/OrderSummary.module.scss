@@ -1,0 +1,39 @@
+@import './variables';
+
+.summary {
+  padding: 2em;
+  background-color: $bg-dark;
+  color: $text-primary-color;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .wrapper {
+    line-height: 2;
+  }
+
+  .group {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+
+  button {
+    color: $bg-primary-color;
+    font-weight: 700;
+    padding: 1em;
+    align-self: flex-start;
+  }
+
+  .paid {
+    color: $success;
+    background-color: $text-primary-color;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 1em;
+  }
+}
