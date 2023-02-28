@@ -1,12 +1,16 @@
 @import './variables';
+@import './responsive';
 
 .container {
   padding: 1em 4em;
+  @include mobile {
+    padding: 1em 2em;
+  }
   background-color: $bg-primary-color;
   color: $text-primary-color;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   position: sticky;
   top: 0;
   height: $nav-height;
@@ -25,7 +29,7 @@
     }
   }
 
-  ul {
+  .nav {
     display: flex;
     align-items: center;
     gap: 2em;
@@ -48,5 +52,50 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .navToggleBtn {
+    display: none;
+    @include mobile {
+      display: block;
+    }
+  }
+
+  .mobileNav {
+    display: none;
+  }
+
+  @include mobile {
+    .item:nth-of-type(2) {
+      order: 1;
+
+      button {
+        position: relative;
+        z-index: 9999;
+      }
+    }
+
+    .nav {
+      display: none;
+    }
+
+    .mobileNav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5em;
+      font-size: 1.2rem;
+      padding: 2em;
+      background-color: $bg-primary-color;
+      position: absolute;
+      top: $nav-height;
+      left: 0;
+      width: 100%;
+      transition: transform 1s ease;
+
+      .logo {
+        display: none;
+      }
+    }
   }
 }

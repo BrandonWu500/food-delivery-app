@@ -1,15 +1,65 @@
 @import './variables';
+@import './responsive';
 
 .container {
   padding: 4em;
   display: grid;
   grid-template-columns: 3fr 1fr;
 
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    text-align: center;
+  }
+
   table {
     width: 100%;
     max-width: 800px;
     margin: auto;
     border-spacing: 2em;
+    @include mobile {
+      font-size: 1.5rem;
+      border-spacing: 0;
+    }
+  }
+
+  @include mobile {
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1em;
+      margin-bottom: 4em;
+      width: 100%;
+    }
+
+    img {
+      width: 10rem;
+      height: 10rem;
+    }
+
+    td {
+      display: flex;
+      gap: 1em;
+    }
+
+    td:nth-of-type(4)::before {
+      content: 'Price: ';
+      font-weight: 500;
+    }
+    td:nth-of-type(5)::before {
+      content: 'Quantity: ';
+      font-weight: 500;
+    }
+    td:nth-of-type(6)::before {
+      content: 'Total: ';
+      font-weight: 500;
+    }
   }
 
   th {
@@ -24,6 +74,10 @@
     color: $bg-primary-color;
     font-weight: 500;
     font-size: 1.2rem;
+
+    @include mobile {
+      font-size: 2rem;
+    }
   }
 
   td:last-of-type {

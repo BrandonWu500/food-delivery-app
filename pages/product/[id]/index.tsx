@@ -26,15 +26,33 @@ const product = ({ product }: ProductProps) => {
             <h2>Choose the size</h2>
             <div className={productPageStyles.group}>
               <button className={productPageStyles.imgContainer}>
-                <Image src={sizeImg} alt="" width={48} height={48} />
+                <Image
+                  src={sizeImg}
+                  alt=""
+                  width={48}
+                  height={48}
+                  className={productPageStyles.smSize}
+                />
                 <span className={productPageStyles.badge}>Small</span>
               </button>
               <button className={productPageStyles.imgContainer}>
-                <Image src={sizeImg} alt="" width={64} height={64} />
+                <Image
+                  src={sizeImg}
+                  alt=""
+                  width={64}
+                  height={64}
+                  className={productPageStyles.mdSize}
+                />
                 <span className={productPageStyles.badge}>Medium</span>
               </button>
               <button className={productPageStyles.imgContainer}>
-                <Image src={sizeImg} alt="" width={96} height={96} />
+                <Image
+                  src={sizeImg}
+                  alt=""
+                  width={96}
+                  height={96}
+                  className={productPageStyles.lgSize}
+                />
                 <span className={productPageStyles.badge}>Large</span>
               </button>
             </div>
@@ -42,7 +60,7 @@ const product = ({ product }: ProductProps) => {
 
           <div className={productPageStyles.wrapper}>
             <h2>Choose additional ingredients</h2>
-            <div className={productPageStyles.group}>
+            <div className={productPageStyles.ingredients}>
               <div className={productPageStyles.inputGroup}>
                 <input
                   type="checkbox"

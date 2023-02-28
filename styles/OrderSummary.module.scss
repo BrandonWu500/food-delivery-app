@@ -1,4 +1,5 @@
 @import './variables';
+@import './responsive';
 
 .summary {
   padding: 2em;
@@ -6,7 +7,17 @@
   color: $text-primary-color;
   display: flex;
   flex-direction: column;
+  @include mobile {
+    align-items: center;
+  }
   gap: 2em;
+
+  @include mobile {
+    h3,
+    p {
+      font-size: 1.5rem;
+    }
+  }
 
   h1 {
     font-size: 2rem;
@@ -20,6 +31,10 @@
     display: flex;
     align-items: center;
     gap: 1em;
+
+    @include mobile {
+      justify-content: space-between;
+    }
   }
 
   button {
@@ -27,6 +42,10 @@
     font-weight: 700;
     padding: 1em;
     align-self: flex-start;
+
+    @include mobile {
+      font-size: 1.2rem;
+    }
   }
 
   .paid {
@@ -35,5 +54,9 @@
     text-align: center;
     font-size: 1.2rem;
     padding: 1em;
+
+    @include mobile {
+      width: 80%;
+    }
   }
 }

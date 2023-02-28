@@ -80,7 +80,14 @@ const order = () => {
           {Object.entries(info).map(([key, val]: any) => (
             <div className={orderStyles.infoGroup} key={key}>
               <h2>{key === 'id' ? 'Order ID' : key}</h2>
-              <p>{val}</p>
+              {key === 'address' ? (
+                <div className={orderStyles.address}>
+                  <p>{val.split('\n')[0]}</p>
+                  <p>{val.split('\n')[1]}</p>
+                </div>
+              ) : (
+                <p>{val}</p>
+              )}
             </div>
           ))}
         </div>

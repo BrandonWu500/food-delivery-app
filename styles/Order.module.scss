@@ -1,8 +1,15 @@
+@import './responsive';
+
 .container {
   padding: 4em;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2em;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
 
   .item {
     display: flex;
@@ -15,11 +22,22 @@
 
 .wrapper {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
   max-width: 800px;
   justify-content: space-between;
   gap: 2em;
+  p {
+    font-size: 1.2rem;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: center;
+    p {
+      text-align: right;
+    }
+  }
 
   h2 {
     text-transform: capitalize;
@@ -30,6 +48,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1em;
+
+  @include mobile {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2em;
+  }
+
+  .address {
+    text-align: center;
+  }
 }
 
 .group {
@@ -37,6 +67,10 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+
+  @include mobile {
+    margin: 1em 0;
+  }
 }
 
 .done {
