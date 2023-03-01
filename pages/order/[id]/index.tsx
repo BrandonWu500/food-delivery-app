@@ -28,7 +28,7 @@ const order = () => {
   const [isError, setIsError] = useState(false);
   const [orderStatus, setOrderStatus] = useState(0);
 
-  /* status will be represented by number, subtract it from the index 
+  /* status will be represented by number/enum, subtract it from the index 
   of each step, 
   if it is below a certain threshold then that means it will be done,
   if it is at threshold, then that means currently on that step,

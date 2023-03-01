@@ -3,67 +3,32 @@ import footerImg from '@/public/images/footerImg.png';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { server } from '@/config';
-
-type StreetType = {
-  number: number;
-  name: string;
-};
-
-type LocationType = {
-  street: StreetType;
-  city: string;
-  state: string;
-  postcode: number;
-  phone?: string;
-  streetNumber?: number;
-  streetName?: string;
-};
-
-type ResultType = {
-  location: LocationType;
-  phone: string;
-};
+import { LocationType } from '@/pages/api/locations';
 
 const Footer = () => {
-  const [footerLocations, setFooterLocations] = useState<ResultType[]>([]);
   const [locations, setLocations] = useState<LocationType[]>([]);
   const fetchData = async () => {
     try {
       const res = await fetch(`${server}/api/locations`);
-      const data = await res.json();
-      const { results } = data;
-      localStorage.setItem('footerLocations', JSON.stringify(results));
-      setFooterLocations(results);
+      const locationData = await res.json();
+      setLocations(locationData);
+      localStorage.setItem('footerLocations', JSON.stringify(locationData));
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    if (footerLocations.length === 0) {
+    if (locations.length === 0) {
       const locStorLocations = localStorage.getItem('footerLocations');
       const locs = locStorLocations && JSON.parse(locStorLocations);
       if (locs) {
-        setFooterLocations(locs);
+        setLocations(locs);
       } else {
         fetchData();
       }
     }
   }, []);
-  useEffect(() => {
-    if (footerLocations.length > 0) {
-      let locs: LocationType[] = [];
-      footerLocations.forEach((item) => {
-        const { name, number } = item.location.street;
-        locs.push({
-          ...item.location,
-          phone: item.phone,
-          streetName: name,
-          streetNumber: number,
-        });
-      });
-      setLocations(locs);
-    }
-  }, [footerLocations]);
+
   return (
     <div className={footerStyles.container}>
       <div className={footerStyles.imgContainer}>
