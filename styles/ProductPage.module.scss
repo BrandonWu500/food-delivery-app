@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 4em;
+  overflow: auto;
 
   @include mobile {
     padding: 2em;
@@ -34,13 +35,13 @@
     flex-direction: column;
     gap: 1em;
 
+    h2 {
+      margin: 0.5em 0;
+    }
+
     @include mobile {
       gap: 2em;
       align-items: center;
-
-      h2 {
-        margin: 0.5em 0;
-      }
     }
 
     p {
@@ -70,12 +71,12 @@
           height: 3rem;
         }
         .mdSize {
-          width: 4.5rem;
-          height: 4.5rem;
+          width: 4rem;
+          height: 4rem;
         }
         .lgSize {
-          width: 6rem;
-          height: 6rem;
+          width: 5rem;
+          height: 5rem;
         }
       }
     }
@@ -117,10 +118,13 @@
     button {
       position: relative;
       padding: 1em;
-      padding-left: 0;
       background-color: transparent;
       border: 0;
       font-size: 1rem;
+      border-bottom: 2px solid transparent;
+    }
+    .selectedSize {
+      border-bottom: 2px solid $bg-primary-color;
     }
     .badge {
       position: absolute;

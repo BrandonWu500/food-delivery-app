@@ -4,12 +4,26 @@ import { server } from '@/config';
 import productPageStyles from '@/styles/ProductPage.module.scss';
 import Image from 'next/image';
 import sizeImg from '@/public/images/size.png';
+import { useState } from 'react';
+
+const enum SizeType {
+  SMALL,
+  MEDIUM,
+  LARGE,
+}
 
 type ProductProps = {
   product: ProductItemType;
 };
 
 const product = ({ product }: ProductProps) => {
+  const [selectedSize, setSelectedSize] = useState(SizeType.SMALL);
+  const sizeClass = (size: SizeType) => {
+    if (selectedSize === size) {
+      return `${productPageStyles.imgContainer} ${productPageStyles.selectedSize}`;
+    }
+    return `${productPageStyles.imgContainer}`;
+  };
   return (
     <>
       <Meta title={product.title} description={product.desc} />
@@ -25,7 +39,10 @@ const product = ({ product }: ProductProps) => {
           <div className={productPageStyles.wrapper}>
             <h2>Choose the size</h2>
             <div className={productPageStyles.group}>
-              <button className={productPageStyles.imgContainer}>
+              <button
+                className={sizeClass(SizeType.SMALL)}
+                onClick={() => setSelectedSize(SizeType.SMALL)}
+              >
                 <Image
                   src={sizeImg}
                   alt=""
@@ -35,7 +52,10 @@ const product = ({ product }: ProductProps) => {
                 />
                 <span className={productPageStyles.badge}>Small</span>
               </button>
-              <button className={productPageStyles.imgContainer}>
+              <button
+                className={sizeClass(SizeType.MEDIUM)}
+                onClick={() => setSelectedSize(SizeType.MEDIUM)}
+              >
                 <Image
                   src={sizeImg}
                   alt=""
@@ -45,7 +65,10 @@ const product = ({ product }: ProductProps) => {
                 />
                 <span className={productPageStyles.badge}>Medium</span>
               </button>
-              <button className={productPageStyles.imgContainer}>
+              <button
+                className={sizeClass(SizeType.LARGE)}
+                onClick={() => setSelectedSize(SizeType.LARGE)}
+              >
                 <Image
                   src={sizeImg}
                   alt=""
