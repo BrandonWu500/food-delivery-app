@@ -1,4 +1,4 @@
-# admin-dashboard-with-firebase
+# food-delivery-app-frontend
 
 ## What I Learned / Gained Experience With
 
