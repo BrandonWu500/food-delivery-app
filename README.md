@@ -18,10 +18,10 @@
 
 ## Future Improvements
 
-- Add backend (probably MongoDB along with Node.js and Express)
+- Add backend (MongoDB with Next Api Handler and Mongoose)
 - Add payment service
 - Add redux for state management
 
 ### Learn More About the Project on my Portfolio Website
 
-https://brandonwu500.github.io/
+https://brandon-wu500-github-hcaiflf7y-brandonwu500.vercel.app/
