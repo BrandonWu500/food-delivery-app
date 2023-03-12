@@ -2,35 +2,49 @@ import { ProductType } from '@/models/Product';
 import { createSlice } from '@reduxjs/toolkit';
 
 type CartProductsType = Partial<ProductType> & {
-  price: number;
-  quantity: number;
+  itemPrice: number;
+  itemQuantity: number;
+  extras: string[];
 };
 
 export type CartSliceState = {
   products: CartProductsType[];
-  quantity: number;
-  total: number;
+  cartQuantity: number;
+  cartTotal: number;
 };
 
 const initialState: CartSliceState = {
   products: [],
-  quantity: 0,
-  total: 0,
+  cartQuantity: 0,
+  cartTotal: 0,
 };
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    getCart: () => {
+      const cart = localStorage.getItem('cart');
+      if (cart) {
+        return JSON.parse(cart);
+      }
+      localStorage.setItem('cart', JSON.stringify(initialState));
+      return initialState;
+    },
     addProduct: (state, action) => {
       const payload: CartProductsType = action.payload;
       state.products.push(payload);
-      state.total += payload.price * payload.quantity;
+      state.cartQuantity += payload.itemQuantity;
+      state.cartTotal += payload.itemPrice * payload.itemQuantity;
+      localStorage.setItem('cart', JSON.stringify(state));
     },
-    reset: () => initialState,
+    reset: () => {
+      localStorage.setItem('cart', JSON.stringify(initialState));
+      return initialState;
+    },
   },
 });
 
-export const { addProduct, reset } = cartSlice.actions;
+export const { getCart, addProduct, reset } = cartSlice.actions;
 
 export default cartSlice.reducer;

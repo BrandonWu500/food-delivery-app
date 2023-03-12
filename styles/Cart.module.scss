@@ -5,6 +5,65 @@
   padding: 4em;
   display: grid;
   grid-template-columns: 3fr 1fr;
+  position: relative;
+
+  .modal {
+    display: none;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgba(0 0 0 / 0.8);
+    z-index: 89;
+
+    .modalContent {
+      transform: translateY(50%);
+      background-color: $text-primary-color;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2em;
+      padding: 4em;
+    }
+
+    .modalBtns {
+      display: flex;
+      gap: 4em;
+
+      button {
+        color: $text-primary-color;
+        background-color: $bg-primary-color;
+        padding: 0.5em 1em;
+        font-size: 1.2rem;
+        border: 0;
+        border-radius: 5px;
+      }
+
+      .yes {
+        background-color: $success;
+      }
+      .no {
+        background-color: $danger;
+      }
+    }
+  }
+
+  .tableSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .clear {
+    color: $text-primary-color;
+    background-color: $bg-primary-color;
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    border: 0;
+    border-radius: 5px;
+  }
 
   @include mobile {
     display: flex;
@@ -17,6 +76,7 @@
     width: 100%;
     max-width: 800px;
     margin: auto;
+    margin-top: 1em;
     border-spacing: 2em;
     @include mobile {
       font-size: 1.5rem;
@@ -82,5 +142,13 @@
 
   td:last-of-type {
     font-weight: 700;
+  }
+
+  .title {
+    text-transform: uppercase;
+  }
+
+  .extras {
+    text-transform: capitalize;
   }
 }

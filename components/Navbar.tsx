@@ -2,12 +2,19 @@ import navStyles from '@/styles/Navbar.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
-import { useAppSelector } from '@/redux/hooks';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { getCart } from '@/redux/cart/cartSlice';
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
-  const { quantity } = useAppSelector((state) => state.cart);
+  const { cartQuantity } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
   return (
     <nav className={navStyles.container}>
       <div className={navStyles.item}>
@@ -32,7 +39,9 @@ const Navbar = () => {
           <li>
             <Link href="/">Homepage</Link>
           </li>
-          <li>Products</li>
+          <li>
+            <Link href="/product">Products</Link>
+          </li>
           <li>Menu</li>
           <li className={navStyles.logo}>
             <h2>Food Delivery</h2>
@@ -49,7 +58,9 @@ const Navbar = () => {
           <li>
             <Link href="/">Homepage</Link>
           </li>
-          <li>Products</li>
+          <li>
+            <Link href="/product">Products</Link>
+          </li>
           <li>Menu</li>
           <li className={navStyles.logo}>
             <h2>Food Delivery</h2>
@@ -63,7 +74,7 @@ const Navbar = () => {
         <Link href="/cart">
           <div className={navStyles.cart}>
             <Image src="/images/cart.png" alt="" width={32} height={32} />
-            <div className={navStyles.badge}>{quantity}</div>
+            <div className={navStyles.badge}>{cartQuantity}</div>
           </div>
         </Link>
       </div>

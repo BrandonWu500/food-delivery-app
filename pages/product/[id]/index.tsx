@@ -9,6 +9,8 @@ import { ProductType } from '@/models/Product';
 import { capitalize } from '@/util/capitalize';
 import { ProductOptionType } from '@/types/productTypes';
 import { Types } from 'mongoose';
+import { useAppDispatch } from '@/redux/hooks';
+import { addProduct } from '@/redux/cart/cartSlice';
 
 const enum SizeType {
   SMALL,
@@ -25,8 +27,7 @@ const product = ({ product }: ProductProps) => {
   const [price, setPrice] = useState(product.prices[0]);
   const [extras, setExtras] = useState<ProductOptionType[]>([]);
   const [quantity, setQuantity] = useState(1);
-
-  console.log(quantity);
+  const dispatch = useAppDispatch();
 
   const changePrice = (num: number) => {
     setPrice(price + num);
@@ -49,6 +50,17 @@ const product = ({ product }: ProductProps) => {
       changePrice(-option.price);
       setExtras(extras.filter((extra) => extra._id !== option._id));
     }
+  };
+
+  const addToCart = () => {
+    dispatch(
+      addProduct({
+        ...product,
+        extras: extras.map((extra) => extra.name),
+        itemPrice: price,
+        itemQuantity: quantity,
+      })
+    );
   };
 
   const sizeClass = (size: SizeType) => {
@@ -125,7 +137,9 @@ const product = ({ product }: ProductProps) => {
                     id={option.name}
                     onChange={(e) => handleExtraOptionsChange(e, option)}
                   />
-                  <label htmlFor={option.name}>{option.name}</label>
+                  <label htmlFor={option.name}>
+                    {option.name}: {'$' + option.price.toFixed(2)}
+                  </label>
                 </div>
               ))}
             </div>
@@ -140,7 +154,9 @@ const product = ({ product }: ProductProps) => {
               min={1}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
-            <button type="submit">Add to Cart</button>
+            <button type="submit" onClick={addToCart}>
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

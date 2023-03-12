@@ -1,5 +1,4 @@
 import mongoose, { InferSchemaType, Types } from 'mongoose';
-import { Key } from 'react';
 
 const ProductSchema = new mongoose.Schema(
   {

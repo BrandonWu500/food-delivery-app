@@ -1,32 +1,31 @@
+import { useAppSelector } from '@/redux/hooks';
 import orderSummaryStyles from '@/styles/OrderSummary.module.scss';
 import Link from 'next/link';
+import { useState } from 'react';
 
 type OrderSummaryProps = {
-  subtotal: number;
   cart?: boolean;
   paid?: boolean;
 };
 
-const OrderSummary = ({
-  subtotal,
-  cart = true,
-  paid = false,
-}: OrderSummaryProps) => {
+const OrderSummary = ({ cart = true, paid = false }: OrderSummaryProps) => {
+  const { cartTotal } = useAppSelector((state) => state.cart);
+  const [discount, setDiscount] = useState(0);
   return (
     <section className={orderSummaryStyles.summary}>
       <h1>CART TOTAL</h1>
       <div className={orderSummaryStyles.wrapper}>
         <div className={orderSummaryStyles.group}>
           <h3>Subtotal: </h3>
-          <p>{'$' + subtotal}</p>
+          <p>{'$' + cartTotal.toFixed(2)}</p>
         </div>
         <div className={orderSummaryStyles.group}>
           <h3>Discount: </h3>
-          <p>$0.00</p>
+          <p>{'$' + discount.toFixed(2)}</p>
         </div>
         <div className={orderSummaryStyles.group}>
           <h3>Total: </h3>
-          <p>{'$' + subtotal}</p>
+          <p>{'$' + cartTotal.toFixed(2)}</p>
         </div>
       </div>
       {cart && (
