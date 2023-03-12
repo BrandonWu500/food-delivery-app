@@ -18,8 +18,9 @@
     object-fit: contain;
   }
 
-  h2 {
+  .title {
     color: $bg-primary-color;
+    text-transform: uppercase;
   }
 
   .price {
@@ -31,5 +32,6 @@
   .desc {
     line-height: 1.6;
     color: $text-primary-neutral;
+    max-width: 60ch;
   }
 }

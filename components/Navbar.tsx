@@ -3,10 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { useAppSelector } from '@/redux/hooks';
 
 const Navbar = () => {
   const [navOpen, setNavOpen] = useState(false);
-
+  const { quantity } = useAppSelector((state) => state.cart);
   return (
     <nav className={navStyles.container}>
       <div className={navStyles.item}>
@@ -62,7 +63,7 @@ const Navbar = () => {
         <Link href="/cart">
           <div className={navStyles.cart}>
             <Image src="/images/cart.png" alt="" width={32} height={32} />
-            <div className={navStyles.badge}>2</div>
+            <div className={navStyles.badge}>{quantity}</div>
           </div>
         </Link>
       </div>

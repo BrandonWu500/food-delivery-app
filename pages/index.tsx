@@ -1,8 +1,15 @@
 import Featured from '@/components/Featured';
 import ProductList from '@/components/ProductList';
+import { server } from '@/config';
+import { ProductType } from '@/models/Product';
 import homeStyles from '@/styles/Home.module.scss';
+import axios from 'axios';
 
-export default function Home() {
+type HomeProps = {
+  items: ProductType[];
+};
+
+export default function Home({ items }: HomeProps) {
   return (
     <div className={homeStyles.container}>
       <Featured />
@@ -15,7 +22,14 @@ export default function Home() {
           obcaecati maiores itaque temporibus maxime.
         </p>
       </article>
-      <ProductList />
+      <ProductList products={items} />
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+  const res = await axios.get(`${server}/api/products`);
+  return {
+    props: { items: res.data },
+  };
+};

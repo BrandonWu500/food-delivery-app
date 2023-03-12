@@ -1,6 +1,7 @@
 import OrderSummary from '@/components/OrderSummary';
 import { server } from '@/config';
 import orderStyles from '@/styles/Order.module.scss';
+import { OrderStatusType } from '@/types/orderTypes';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -12,13 +13,6 @@ export type OrderItemType = {
   total: number;
   status: string;
 };
-
-enum OrderStatusType {
-  PAID,
-  PREPARING,
-  ON_THE_WAY,
-  DELIVERED,
-}
 
 const order = () => {
   const router = useRouter();

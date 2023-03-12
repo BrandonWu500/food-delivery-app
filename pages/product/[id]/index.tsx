@@ -1,10 +1,14 @@
 import Meta from '@/components/Meta';
-import { ProductItemType } from '@/components/ProductItem';
 import { server } from '@/config';
 import productPageStyles from '@/styles/ProductPage.module.scss';
 import Image from 'next/image';
 import sizeImg from '@/public/images/size.png';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import axios from 'axios';
+import { ProductType } from '@/models/Product';
+import { capitalize } from '@/util/capitalize';
+import { ProductOptionType } from '@/types/productTypes';
+import { Types } from 'mongoose';
 
 const enum SizeType {
   SMALL,
@@ -13,11 +17,40 @@ const enum SizeType {
 }
 
 type ProductProps = {
-  product: ProductItemType;
+  product: ProductType;
 };
 
 const product = ({ product }: ProductProps) => {
   const [selectedSize, setSelectedSize] = useState(SizeType.SMALL);
+  const [price, setPrice] = useState(product.prices[0]);
+  const [extras, setExtras] = useState<ProductOptionType[]>([]);
+  const [quantity, setQuantity] = useState(1);
+
+  console.log(quantity);
+
+  const changePrice = (num: number) => {
+    setPrice(price + num);
+  };
+
+  const handleSizeClick = (size: SizeType) => {
+    const priceDiff = product.prices[size] - product.prices[selectedSize];
+    setSelectedSize(size);
+    changePrice(priceDiff);
+  };
+
+  const handleExtraOptionsChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    option: ProductOptionType
+  ) => {
+    if (e.target.checked) {
+      changePrice(option.price);
+      setExtras((prev) => [...prev, option]);
+    } else {
+      changePrice(-option.price);
+      setExtras(extras.filter((extra) => extra._id !== option._id));
+    }
+  };
+
   const sizeClass = (size: SizeType) => {
     if (selectedSize === size) {
       return `${productPageStyles.imgContainer} ${productPageStyles.selectedSize}`;
@@ -26,14 +59,14 @@ const product = ({ product }: ProductProps) => {
   };
   return (
     <>
-      <Meta title={product.title} description={product.desc} />
+      <Meta title={capitalize(product.title)} description={product.desc} />
       <div className={productPageStyles.container}>
         <div className={productPageStyles.imgContainer}>
           <Image src={product.img} alt="" width={500} height={500} />
         </div>
         <div className={productPageStyles.textContainer}>
-          <h1>{product.title}</h1>
-          <p className={productPageStyles.price}>{'$' + product.price}</p>
+          <h1>{product.title.toUpperCase()}</h1>
+          <p className={productPageStyles.price}>{'$' + price}</p>
           <p>{product.desc}</p>
 
           <div className={productPageStyles.wrapper}>
@@ -41,7 +74,7 @@ const product = ({ product }: ProductProps) => {
             <div className={productPageStyles.group}>
               <button
                 className={sizeClass(SizeType.SMALL)}
-                onClick={() => setSelectedSize(SizeType.SMALL)}
+                onClick={() => handleSizeClick(SizeType.SMALL)}
               >
                 <Image
                   src={sizeImg}
@@ -54,7 +87,7 @@ const product = ({ product }: ProductProps) => {
               </button>
               <button
                 className={sizeClass(SizeType.MEDIUM)}
-                onClick={() => setSelectedSize(SizeType.MEDIUM)}
+                onClick={() => handleSizeClick(SizeType.MEDIUM)}
               >
                 <Image
                   src={sizeImg}
@@ -67,7 +100,7 @@ const product = ({ product }: ProductProps) => {
               </button>
               <button
                 className={sizeClass(SizeType.LARGE)}
-                onClick={() => setSelectedSize(SizeType.LARGE)}
+                onClick={() => handleSizeClick(SizeType.LARGE)}
               >
                 <Image
                   src={sizeImg}
@@ -84,31 +117,29 @@ const product = ({ product }: ProductProps) => {
           <div className={productPageStyles.wrapper}>
             <h2>Choose additional ingredients</h2>
             <div className={productPageStyles.ingredients}>
-              <div className={productPageStyles.inputGroup}>
-                <input
-                  type="checkbox"
-                  name="double-ingredients"
-                  id="double-ingredients"
-                />
-                <label htmlFor="double-ingredients">Double Ingredients</label>
-              </div>
-              <div className={productPageStyles.inputGroup}>
-                <input type="checkbox" name="extra-cheese" id="extra-cheese" />
-                <label htmlFor="extra-cheese">Extra Cheese</label>
-              </div>
-              <div className={productPageStyles.inputGroup}>
-                <input type="checkbox" name="spicy-sauce" id="spicy-sauce" />
-                <label htmlFor="spicy-sauce">Spicy Sauce</label>
-              </div>
-              <div className={productPageStyles.inputGroup}>
-                <input type="checkbox" name="garlic-sauce" id="garlic-sauce" />
-                <label htmlFor="garlic-sauce">Garlic Sauce</label>
-              </div>
+              {product.extraOptions.map((option, idx) => (
+                <div className={productPageStyles.inputGroup} key={idx}>
+                  <input
+                    type="checkbox"
+                    name={option.name}
+                    id={option.name}
+                    onChange={(e) => handleExtraOptionsChange(e, option)}
+                  />
+                  <label htmlFor={option.name}>{option.name}</label>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className={productPageStyles.submitGroup}>
-            <input type="number" name="" id="" defaultValue={1} min={1} />
+            <input
+              type="number"
+              name=""
+              id=""
+              defaultValue={1}
+              min={1}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
             <button type="submit">Add to Cart</button>
           </div>
         </div>
@@ -117,30 +148,11 @@ const product = ({ product }: ProductProps) => {
   );
 };
 
-export const getStaticProps = async (context: any) => {
-  const res = await fetch(`${server}/api/products/${context.params.id}`);
-  const product = await res.json();
-
+export const getServerSideProps = async (context: any) => {
+  const res = await axios.get(`${server}/api/products/${context.params.id}`);
+  const product = res.data;
   return {
-    props: {
-      product,
-    },
-  };
-};
-
-export const getStaticPaths = async () => {
-  const res = await fetch(`${server}/api/products`);
-  const products = await res.json();
-
-  const ids: Array<number | string> = products.map(
-    (product: ProductItemType) => product.id
-  );
-
-  const paths = ids.map((id) => ({ params: { id: id.toString() } }));
-
-  return {
-    paths,
-    fallback: false,
+    props: { product: product },
   };
 };
 

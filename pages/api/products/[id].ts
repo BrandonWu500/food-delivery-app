@@ -1,14 +1,47 @@
-import { productItems } from '@/data';
+import Product from '@/models/Product';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const id = req.query.id;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { method, query } = req;
+  const id = query.id;
 
-  const filtered = productItems.filter((item) => item.id.toString() === id);
+  switch (method) {
+    case 'GET':
+      try {
+        const product = await Product.findById(id);
+        res.status(200).json(product);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+      }
+      break;
 
-  if (filtered.length > 0) {
-    res.status(200).json(filtered[0]);
-  } else {
-    res.status(404).json({ message: `Product with id ${id} not found` });
+    case 'PUT':
+      try {
+        const product = await Product.findByIdAndUpdate(id, req.body, {
+          new: true,
+        });
+        res.status(200).json(product);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+      }
+      break;
+
+    case 'DELETE':
+      try {
+        const deletedId = await Product.findByIdAndDelete(id);
+        res.status(200).json(`Product with id ${deletedId} has been deleted`);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+      }
+      break;
+
+    default:
+      throw new Error();
   }
 }

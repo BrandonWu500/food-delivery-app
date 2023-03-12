@@ -1,13 +1,17 @@
 import { productItems } from '@/data';
+import { ProductType } from '@/models/Product';
 import productListStyles from '@/styles/ProductList.module.scss';
 import ProductItem from './ProductItem';
 
-const ProductList = () => {
+type ProductListProps = {
+  products: ProductType[];
+};
+
+const ProductList = ({ products }: ProductListProps) => {
   return (
     <div className={productListStyles.container}>
-      {productItems.map((item) => (
-        <ProductItem key={item.id} {...item} />
-      ))}
+      {products.length > 0 &&
+        products.map((item, idx) => <ProductItem key={idx} {...item} />)}
     </div>
   );
 };

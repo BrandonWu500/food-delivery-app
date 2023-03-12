@@ -113,6 +113,10 @@
           height: 2rem;
         }
       }
+
+      label {
+        text-transform: capitalize;
+      }
     }
 
     button {
