@@ -1,3 +1,4 @@
+import dbConnect from '@/lib/dbConnect';
 import Product from '@/models/Product';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -7,6 +8,8 @@ export default async function handler(
 ) {
   const { method, query } = req;
   const id = query.id;
+
+  await dbConnect();
 
   switch (method) {
     case 'GET':

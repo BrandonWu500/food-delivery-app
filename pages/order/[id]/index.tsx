@@ -1,7 +1,9 @@
 import OrderSummary from '@/components/OrderSummary';
 import { server } from '@/config';
+import { OrderType } from '@/models/Order';
 import orderStyles from '@/styles/Order.module.scss';
 import { OrderStatusType } from '@/types/orderTypes';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -17,7 +19,7 @@ export type OrderItemType = {
 const order = () => {
   const router = useRouter();
   const queryId = router.query.id;
-  const [info, setInfo] = useState({ total: 0 });
+  const [info, setInfo] = useState<OrderType | any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [orderStatus, setOrderStatus] = useState(0);
@@ -44,10 +46,10 @@ const order = () => {
         const res = await fetch(`${server}/api/orders/${queryId}`);
         const data = await res.json();
         const { status, ...rest } = data;
-        if (status === 'paid') setOrderStatus(OrderStatusType.PAID);
-        if (status === 'preparing') setOrderStatus(OrderStatusType.PREPARING);
-        if (status === 'on the way') setOrderStatus(OrderStatusType.ON_THE_WAY);
-        if (status === 'delivered') setOrderStatus(OrderStatusType.DELIVERED);
+        if (status === 'PAID') setOrderStatus(OrderStatusType.PAID);
+        if (status === 'PREPARING') setOrderStatus(OrderStatusType.PREPARING);
+        if (status === 'ON THE WAY') setOrderStatus(OrderStatusType.ON_THE_WAY);
+        if (status === 'DELIVERED') setOrderStatus(OrderStatusType.DELIVERED);
 
         setInfo(rest);
         setIsLoading(false);
@@ -71,19 +73,25 @@ const order = () => {
     <div className={orderStyles.container}>
       <section className={orderStyles.item}>
         <div className={orderStyles.wrapper}>
-          {Object.entries(info).map(([key, val]: any) => (
-            <div className={orderStyles.infoGroup} key={key}>
-              <h2>{key === 'id' ? 'Order ID' : key}</h2>
-              {key === 'address' ? (
-                <div className={orderStyles.address}>
-                  <p>{val.split('\n')[0]}</p>
-                  <p>{val.split('\n')[1]}</p>
-                </div>
-              ) : (
-                <p>{val}</p>
-              )}
-            </div>
-          ))}
+          <div className={orderStyles.infoGroup}>
+            <h2>Order ID</h2>
+            <p>{info._id}</p>
+          </div>
+          <div className={orderStyles.infoGroup}>
+            <h2>Customer</h2>
+            <p>{info.customer}</p>
+          </div>
+          <div className={orderStyles.infoGroup}>
+            <h2>Address</h2>
+            <p>{info.address.split(',')[0]}</p>
+            <p>
+              {info.address.split(',')[1]}, {info.address.split(',')[2]}
+            </p>
+          </div>
+          <div className={orderStyles.infoGroup}>
+            <h2>Total</h2>
+            <p>{'$' + info.total.toFixed(2)}</p>
+          </div>
         </div>
         <div className={orderStyles.wrapper}>
           <div className={statusClass(OrderStatusType.PAID)}>
@@ -132,11 +140,7 @@ const order = () => {
           </div>
         </div>
       </section>
-      <OrderSummary
-        subtotal={info.total}
-        cart={false}
-        paid={orderStatus >= OrderStatusType.PAID}
-      />
+      <OrderSummary cart={false} paid={orderStatus >= OrderStatusType.PAID} />
     </div>
   );
 };

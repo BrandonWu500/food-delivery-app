@@ -3,8 +3,10 @@ import { server } from '@/config';
 import { reset } from '@/redux/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import cartStyles from '@/styles/Cart.module.scss';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
 export type CartItemType = {
@@ -27,6 +29,7 @@ const cart = (/* { cart }: CartProps */) => {
   const [subtotal, setSubtotal] = useState(0);
   const { products } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     const sum = products.reduce((acc, cur) => {
       return acc + cur.itemPrice;
@@ -44,6 +47,7 @@ const cart = (/* { cart }: CartProps */) => {
     if (!modalRef.current) return;
     modalRef.current.style.display = 'none';
   };
+
   return (
     <div className={cartStyles.container}>
       <div className={cartStyles.modal} ref={modalRef}>

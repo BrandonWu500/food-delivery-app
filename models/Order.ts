@@ -1,5 +1,5 @@
 import { OrderStatusType, PaymentMethodType } from '@/types/orderTypes';
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType, Types } from 'mongoose';
 
 const OrderSchema = new mongoose.Schema(
   {
@@ -18,15 +18,21 @@ const OrderSchema = new mongoose.Schema(
       required: true,
     },
     status: {
-      type: OrderStatusType,
-      default: 0,
+      type: Number,
+      enum: OrderStatusType,
+      default: OrderStatusType.PAID,
     },
     method: {
-      type: PaymentMethodType,
+      type: Number,
+      enum: PaymentMethodType,
       required: true,
     },
   },
   { timestamps: true }
 );
+
+export type OrderType = InferSchemaType<typeof OrderSchema> & {
+  _id: Types.ObjectId;
+};
 
 export default mongoose.models.Order || mongoose.model('Order', OrderSchema);
