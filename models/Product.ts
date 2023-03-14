@@ -6,6 +6,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
       maxLength: 60,
+      unique: true,
     },
     desc: {
       type: String,

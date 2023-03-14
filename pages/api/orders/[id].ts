@@ -24,9 +24,23 @@ export default async function handler(
       break;
 
     case 'PUT':
+      try {
+        const order = await Order.findByIdAndUpdate(id, req.body, {
+          new: true,
+        });
+        res.status(200).json(order);
+      } catch (error) {
+        res.status(500).json(error);
+      }
       break;
 
     case 'DELETE':
+      try {
+        const order = await Order.findByIdAndDelete(id);
+        res.status(200).json(order);
+      } catch (error) {
+        res.status(500).json(error);
+      }
       break;
 
     default:

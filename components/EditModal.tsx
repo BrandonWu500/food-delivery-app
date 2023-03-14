@@ -24,6 +24,7 @@ const EditModal = ({
   const [product, setProduct] = useState<EditProductType>();
 
   useEffect(() => {
+    if (!editProductRef.current) return;
     setProduct({
       ...editProductRef.current,
       pricesStr: editProductRef.current.prices.join(', '),
@@ -65,7 +66,11 @@ const EditModal = ({
   return (
     <div className={editModalStyles.container}>
       <div className={editModalStyles.overlay} ref={modalRef}>
-        <form className={editModalStyles.modal} onSubmit={handleSubmit}>
+        <form
+          className={editModalStyles.modal}
+          onSubmit={handleSubmit}
+          method="post"
+        >
           <h1>{product ? 'Edit Product' : 'Loading'}</h1>
           {product && (
             <>

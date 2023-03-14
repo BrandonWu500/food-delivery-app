@@ -3,7 +3,7 @@ import { server } from '@/config';
 import { OrderSchemaType, OrderType } from '@/models/Order';
 import { ProductType } from '@/models/Product';
 import adminStyles from '@/styles/Admin.module.scss';
-import { PaymentMethodType } from '@/types/orderTypes';
+import { OrderStatusType, PaymentMethodType } from '@/types/orderTypes';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
@@ -16,12 +16,54 @@ type AdminProps = {
 const admin = ({ products, orders }: AdminProps) => {
   const orderStatusOptions = ['preparing', 'on the way', 'delivered'];
   const [showModal, setShowModal] = useState(false);
-
+  const [productInfos, setProductInfos] = useState(products);
+  const [orderInfos, setOrderInfos] = useState(orders);
   const editProductRef = useRef(products[0]);
 
   const handleEdit = (product: ProductType) => {
     editProductRef.current = product;
     setShowModal(true);
+  };
+
+  const handleProductDelete = async (delProduct: ProductType) => {
+    try {
+      const res = await axios.delete(
+        `${server}/api/products/${delProduct._id}`
+      );
+      const newProducts = productInfos.filter(
+        (product) => product._id !== delProduct._id
+      );
+      setProductInfos(newProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOrderDelete = async (delOrder: OrderSchemaType) => {
+    try {
+      const res = await axios.delete(`${server}/api/orders/${delOrder._id}`);
+      const newOrders = orderInfos.filter(
+        (order) => order._id !== delOrder._id
+      );
+      setOrderInfos(newOrders);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleNextStage = async (updateOrder: OrderSchemaType) => {
+    try {
+      const res = await axios.put(`${server}/api/orders/${updateOrder._id}`, {
+        status: updateOrder.status + 1,
+      });
+      const newOrders = [
+        res.data,
+        ...orderInfos.filter((order) => updateOrder._id !== order._id),
+      ];
+      setOrderInfos(newOrders);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className={adminStyles.container}>
@@ -38,7 +80,7 @@ const admin = ({ products, orders }: AdminProps) => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, idx) => (
+            {productInfos.map((product, idx) => (
               <tr key={idx}>
                 <td>
                   <div>
@@ -66,7 +108,12 @@ const admin = ({ products, orders }: AdminProps) => {
                     >
                       Edit
                     </button>
-                    <button className={adminStyles.delete}>Delete</button>
+                    <button
+                      className={adminStyles.delete}
+                      onClick={() => handleProductDelete(product)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -93,7 +140,7 @@ const admin = ({ products, orders }: AdminProps) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, idx) => (
+            {orderInfos.map((order, idx) => (
               <tr key={idx}>
                 <td>
                   <div>{order._id.toString()}</div>
@@ -116,7 +163,20 @@ const admin = ({ products, orders }: AdminProps) => {
                 </td>
                 <td>
                   <div className={adminStyles.tableBtns}>
-                    <button className={adminStyles.next}>Next Stage</button>
+                    {order.status < OrderStatusType.ON_THE_WAY && (
+                      <button
+                        className={adminStyles.next}
+                        onClick={() => handleNextStage(order)}
+                      >
+                        Next Stage
+                      </button>
+                    )}
+                    <button
+                      className={adminStyles.delete}
+                      onClick={() => handleOrderDelete(order)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
