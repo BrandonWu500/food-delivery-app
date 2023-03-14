@@ -40,14 +40,12 @@ const Navbar = () => {
             <Link href="/">Homepage</Link>
           </li>
           <li>
-            <Link href="/product">Products</Link>
+            <Link href="/product">Menu</Link>
           </li>
-          <li>Menu</li>
           <li className={navStyles.logo}>
             <h2>Food Delivery</h2>
           </li>
           <li>Events</li>
-          <li>Blog</li>
           <li>Contact</li>
         </ul>
         <ul
@@ -59,14 +57,12 @@ const Navbar = () => {
             <Link href="/">Homepage</Link>
           </li>
           <li>
-            <Link href="/product">Products</Link>
+            <Link href="/product">Menu</Link>
           </li>
-          <li>Menu</li>
           <li className={navStyles.logo}>
             <h2>Food Delivery</h2>
           </li>
           <li>Events</li>
-          <li>Blog</li>
           <li>Contact</li>
         </ul>
       </div>

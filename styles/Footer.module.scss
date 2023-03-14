@@ -5,7 +5,6 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   height: calc(100vh - $nav-height);
-  z-index: 99;
 
   @include mobile {
     height: 100%;

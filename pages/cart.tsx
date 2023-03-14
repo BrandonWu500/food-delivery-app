@@ -1,3 +1,5 @@
+import ConfirmModal from '@/components/ConfirmModal';
+import OrderModal from '@/components/OrderModal';
 import OrderSummary from '@/components/OrderSummary';
 import { server } from '@/config';
 import { reset } from '@/redux/cart/cartSlice';
@@ -26,16 +28,7 @@ type CartProps = {
 const HEADERS = ['product', 'name', 'extras', 'price', 'quantity', 'total'];
 
 const cart = (/* { cart }: CartProps */) => {
-  const [subtotal, setSubtotal] = useState(0);
   const { products } = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const sum = products.reduce((acc, cur) => {
-      return acc + cur.itemPrice;
-    }, 0);
-    setSubtotal(sum);
-  }, []);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -43,32 +36,10 @@ const cart = (/* { cart }: CartProps */) => {
     if (!modalRef.current) return;
     modalRef.current.style.display = 'flex';
   };
-  const closeModal = () => {
-    if (!modalRef.current) return;
-    modalRef.current.style.display = 'none';
-  };
 
   return (
     <div className={cartStyles.container}>
-      <div className={cartStyles.modal} ref={modalRef}>
-        <div className={cartStyles.modalContent}>
-          <h1>Are you sure you want to clear your cart?</h1>
-          <div className={cartStyles.modalBtns}>
-            <button
-              onClick={() => {
-                dispatch(reset());
-                closeModal();
-              }}
-              className={cartStyles.yes}
-            >
-              Yes
-            </button>
-            <button onClick={closeModal} className={cartStyles.no}>
-              No
-            </button>
-          </div>
-        </div>
-      </div>
+      <ConfirmModal modalRef={modalRef} />
       <section className={cartStyles.tableSection}>
         <button className={cartStyles.clear} onClick={openModal}>
           Clear Cart
