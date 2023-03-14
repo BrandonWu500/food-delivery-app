@@ -1,0 +1,53 @@
+@import './variables';
+
+.container {
+  padding: 4em;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, 1fr);
+
+  .tableTitle {
+    font-size: 2rem;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  table {
+    font-size: 1.2rem;
+    border-spacing: 2rem;
+    margin: auto;
+    th {
+      text-align: left;
+    }
+
+    td {
+      max-width: 40ch;
+      overflow: auto;
+    }
+
+    .tableBtns {
+      display: flex;
+      gap: 1em;
+
+      button {
+        padding: 0.5em;
+        color: $text-primary-color;
+        border-radius: 5px;
+        border: 0;
+        font-size: 1rem;
+      }
+
+      .edit {
+        background-color: $success;
+      }
+
+      .delete {
+        background-color: $danger;
+      }
+
+      .next {
+        background-color: $primary;
+      }
+    }
+  }
+}

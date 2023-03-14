@@ -8,6 +8,9 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       maxLength: 60,
     },
+    phone: {
+      type: String,
+    },
     address: {
       type: String,
       required: true,
@@ -31,8 +34,13 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export type OrderType = InferSchemaType<typeof OrderSchema> & {
+export type OrderSchemaType = InferSchemaType<typeof OrderSchema> & {
   _id: Types.ObjectId;
 };
+
+export type OrderType = Omit<
+  OrderSchemaType,
+  'createdAt' | 'updatedAt' | '_id'
+>;
 
 export default mongoose.models.Order || mongoose.model('Order', OrderSchema);

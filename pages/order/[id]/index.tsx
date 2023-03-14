@@ -84,9 +84,11 @@ const order = () => {
           <div className={orderStyles.infoGroup}>
             <h2>Address</h2>
             <p>{info.address.split(',')[0]}</p>
-            <p>
-              {info.address.split(',')[1]}, {info.address.split(',')[2]}
-            </p>
+            {info.address.split(',')[1] && (
+              <p>
+                {info.address.split(',')[1]}, {info.address.split(',')[2]}
+              </p>
+            )}
           </div>
           <div className={orderStyles.infoGroup}>
             <h2>Total</h2>

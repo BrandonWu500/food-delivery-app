@@ -1,5 +1,6 @@
 import { OrderType } from '@/models/Order';
 import orderModalStyles from '@/styles/OrderModal.module.scss';
+import { OrderStatusType, PaymentMethodType } from '@/types/orderTypes';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
 type OrderModalProps = {
@@ -40,8 +41,14 @@ const OrderModal = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    /* makeOrder({ customer: name,  }); */
-    console.log(formData);
+    makeOrder({
+      customer: name,
+      phone,
+      address,
+      total: amount,
+      status: OrderStatusType.PAID,
+      method: PaymentMethodType.CASH,
+    });
   };
 
   return (

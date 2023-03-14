@@ -1,0 +1,53 @@
+@import './variables';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: $overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  form {
+    background-color: $text-primary-color;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+
+      input[type='text'] {
+        padding: 0.5em;
+        font-size: 1rem;
+      }
+    }
+
+    .btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4em;
+
+      button {
+        padding: 0.5em;
+        color: $text-primary-color;
+        border-radius: 5px;
+        border: 0;
+        font-size: 1rem;
+      }
+
+      .update {
+        background-color: $success;
+      }
+
+      .cancel {
+        background-color: $danger;
+      }
+    }
+  }
+}
