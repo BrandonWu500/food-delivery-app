@@ -1,0 +1,42 @@
+@import './variables';
+
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    transform: translateY(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    position: relative;
+
+    input,
+    button {
+      padding: 0.5em;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: $bg-accent;
+      color: $text-primary-color;
+      border: 0;
+    }
+
+    input {
+      border: 1px solid gray;
+    }
+
+    span {
+      color: $danger;
+      position: absolute;
+      bottom: -3rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}

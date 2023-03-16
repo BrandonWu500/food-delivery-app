@@ -6,7 +6,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, query } = req;
+  const {
+    method,
+    query,
+    cookies: { token },
+  } = req;
   const id = query.id;
 
   await dbConnect();
@@ -23,6 +27,9 @@ export default async function handler(
       break;
 
     case 'PUT':
+      if (!token || token !== process.env.TOKEN) {
+        res.status(403).json('Not authorized to do that');
+      }
       try {
         const product = await Product.findByIdAndUpdate(id, req.body, {
           new: true,
@@ -35,6 +42,9 @@ export default async function handler(
       break;
 
     case 'DELETE':
+      if (!token || token !== process.env.TOKEN) {
+        res.status(403).json('Not authorized to do that');
+      }
       try {
         const deletedId = await Product.findByIdAndDelete(id);
         res.status(200).json(`Product with id ${deletedId} has been deleted`);

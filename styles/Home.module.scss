@@ -1,9 +1,21 @@
 @import './responsive';
+@import './variables';
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 2em;
+
+  .addProduct {
+    margin-top: 2em;
+    align-self: center;
+    padding: 1em 2em;
+    font-size: 1.2rem;
+    background-color: $bg-primary-color;
+    color: $text-primary-color;
+    border-radius: 10px;
+    border: 0;
+  }
 }
 
 .article {

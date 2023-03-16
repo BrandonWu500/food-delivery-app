@@ -24,7 +24,7 @@ const ProductSchema = new mongoose.Schema(
     extraOptions: {
       type: [
         {
-          name: { type: String, required: true },
+          name: { type: String, required: true, unique: true },
           price: { type: Number, required: true },
         },
       ],

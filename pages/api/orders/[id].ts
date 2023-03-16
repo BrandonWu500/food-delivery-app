@@ -9,6 +9,7 @@ export default async function handler(
   const {
     method,
     query: { id },
+    cookies: { token },
   } = req;
 
   await dbConnect();
@@ -24,6 +25,9 @@ export default async function handler(
       break;
 
     case 'PUT':
+      if (!token || token !== process.env.TOKEN) {
+        res.status(403).json('Not authorized to do that');
+      }
       try {
         const order = await Order.findByIdAndUpdate(id, req.body, {
           new: true,
@@ -35,6 +39,9 @@ export default async function handler(
       break;
 
     case 'DELETE':
+      if (!token || token !== process.env.TOKEN) {
+        res.status(403).json('Not authorized to do that');
+      }
       try {
         const order = await Order.findByIdAndDelete(id);
         res.status(200).json(order);

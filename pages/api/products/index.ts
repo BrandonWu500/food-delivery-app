@@ -7,7 +7,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method } = req;
+  const {
+    method,
+    cookies: { token },
+  } = req;
 
   await dbConnect();
 
@@ -23,6 +26,10 @@ export default async function handler(
       break;
 
     case 'POST':
+      if (!token || token !== process.env.TOKEN) {
+        res.status(403).json('Not authorized to do that');
+      }
+
       try {
         const product = await Product.create(req.body);
         res.status(201).json(product);

@@ -188,7 +188,16 @@ const admin = ({ products, orders }: AdminProps) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: any) => {
+  const myCookie = context.req?.cookies ?? '';
+  if (myCookie.token !== process.env.TOKEN) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    };
+  }
   const [productsRes, ordersRes] = await Promise.all([
     axios.get(`${server}/api/products`),
     axios.get(`${server}/api/orders`),
