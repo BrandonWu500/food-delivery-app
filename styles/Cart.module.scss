@@ -108,4 +108,13 @@
   .extras {
     text-transform: capitalize;
   }
+
+  .delBtn {
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    background-color: $danger;
+    color: $text-primary-color;
+    border: 0;
+    border-radius: 5px;
+  }
 }

@@ -2,10 +2,11 @@ import ConfirmModal from '@/components/ConfirmModal';
 import OrderModal from '@/components/OrderModal';
 import OrderSummary from '@/components/OrderSummary';
 import { server } from '@/config';
-import { reset } from '@/redux/cart/cartSlice';
+import { deleteProduct, reset } from '@/redux/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import cartStyles from '@/styles/Cart.module.scss';
 import axios from 'axios';
+import { Types } from 'mongoose';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -29,12 +30,17 @@ const HEADERS = ['product', 'name', 'extras', 'price', 'quantity', 'total'];
 
 const cart = (/* { cart }: CartProps */) => {
   const { products } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   const openModal = () => {
     if (!modalRef.current) return;
     modalRef.current.style.display = 'flex';
+  };
+
+  const handleDelete = (cartIdx: number) => {
+    dispatch(deleteProduct(cartIdx));
   };
 
   return (
@@ -55,8 +61,8 @@ const cart = (/* { cart }: CartProps */) => {
             </tr>
           </thead>
           <tbody>
-            {products.map((item, idx) => (
-              <tr key={idx}>
+            {products.map((item, cartIdx) => (
+              <tr key={cartIdx}>
                 <td>
                   <div className={cartStyles.wrapper}>
                     <Link href={`/product/${item._id}`}>
@@ -87,6 +93,18 @@ const cart = (/* { cart }: CartProps */) => {
                     {'$' + (item.itemPrice * item.itemQuantity).toFixed(2)}
                   </div>
                 </td>
+                {item._id && (
+                  <td>
+                    <div className={cartStyles.wrapper}>
+                      <button
+                        className={cartStyles.delBtn}
+                        onClick={() => handleDelete(cartIdx)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
