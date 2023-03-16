@@ -41,7 +41,6 @@ export const cartSlice = createSlice({
     deleteProduct: (state, action) => {
       const cartIdx = action.payload;
       const delProduct = state.products[cartIdx];
-      if (!delProduct) return;
       state.cartQuantity -= delProduct.itemQuantity;
       state.cartTotal -= delProduct.itemPrice * delProduct.itemQuantity;
       state.products.splice(cartIdx, 1);

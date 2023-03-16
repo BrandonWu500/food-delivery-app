@@ -26,7 +26,7 @@ type CartProps = {
   cart: CartItemType[];
 };
 
-const HEADERS = ['product', 'name', 'extras', 'price', 'quantity', 'total'];
+const HEADERS = ['item', 'name', 'extras', 'price', 'quantity', 'total'];
 
 const cart = (/* { cart }: CartProps */) => {
   const { products } = useAppSelector((state) => state.cart);

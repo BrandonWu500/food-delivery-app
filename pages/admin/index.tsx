@@ -84,7 +84,13 @@ const admin = ({ products, orders }: AdminProps) => {
               <tr key={idx}>
                 <td>
                   <div>
-                    <Image src={product.img} alt="" width={64} height={64} />
+                    <Image
+                      src={product.img}
+                      alt=""
+                      width={64}
+                      height={64}
+                      style={{ objectFit: 'contain' }}
+                    />
                   </div>
                 </td>
                 <td>

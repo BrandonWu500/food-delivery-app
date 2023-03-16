@@ -2,6 +2,7 @@ import { server } from '@/config';
 import { ProductType } from '@/models/Product';
 import editModalStyles from '@/styles/EditModal.module.scss';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
 type EditModalProps = {
@@ -22,6 +23,8 @@ const EditModal = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const [product, setProduct] = useState<EditProductType>();
+  const [file, setFile] = useState<File>();
+  const router = useRouter();
 
   useEffect(() => {
     if (!editProductRef.current) return;
@@ -41,8 +44,33 @@ const EditModal = ({
     }
   }, [showModal]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const uploadImg = async () => {
+    if (!file) return;
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'uploads');
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+        data
+      );
+      return res.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (!product) return;
+
+    let imgUrl = product.img;
+
+    if (file) {
+      imgUrl = await uploadImg();
+    }
 
     // convert input str array back to arr of numbers to fit db type
     const arrNumPrices = product.pricesStr.split(', ').map(Number);
@@ -53,8 +81,9 @@ const EditModal = ({
         const res = await axios.put(`${server}/api/products/${product._id}`, {
           ...rest,
           prices: arrNumPrices,
+          img: imgUrl,
         });
-        console.log(res.data);
+        router.reload();
       } catch (error) {
         console.log(error);
       }
@@ -103,7 +132,15 @@ const EditModal = ({
               </div>
               <div className={editModalStyles.formGroup}>
                 <label htmlFor="title">Image</label>
-                <input type="file" name="img" id="img" />
+                <input
+                  type="file"
+                  name="img"
+                  id="img"
+                  onChange={(e) => {
+                    if (!e.target.files) return;
+                    setFile(e.target.files[0]);
+                  }}
+                />
               </div>
               <div className={editModalStyles.btns}>
                 <button className={editModalStyles.update} type="submit">
