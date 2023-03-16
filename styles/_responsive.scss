@@ -4,3 +4,10 @@
     @content;
   }
 }
+
+// laptop responsive
+@mixin laptop {
+  @media screen and (max-width: 1600px) {
+    @content;
+  }
+}

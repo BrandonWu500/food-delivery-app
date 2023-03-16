@@ -7,6 +7,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 export type OrderItemType = {
   id: number | string;
@@ -16,13 +17,29 @@ export type OrderItemType = {
   status: string;
 };
 
+const fetcher = async (url: any) => {
+  if (url.includes('undefined')) return;
+  try {
+    const res = await axios.get(url);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const order = () => {
   const router = useRouter();
   const queryId = router.query.id;
+  const { data: orderData, error } = useSWR(
+    `${server}/api/orders/${queryId}`,
+    fetcher,
+    {
+      refreshInterval: 3000,
+    }
+  );
   const [info, setInfo] = useState<OrderType | any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [orderStatus, setOrderStatus] = useState(0);
 
   /* status will be represented by number/enum, subtract it from the index 
   of each step, 
@@ -31,11 +48,11 @@ const order = () => {
   if it is above threshold, then that means step has not been completed yet */
 
   const statusClass = (idx: number) => {
-    if (idx - orderStatus < 1)
+    if (idx - orderData.status < 1)
       return `${orderStyles.complete} ${orderStyles.group}`;
-    if (idx - orderStatus === 1)
+    if (idx - orderData.status === 1)
       return `${orderStyles.progress} ${orderStyles.group}`;
-    if (idx - orderStatus > 1)
+    if (idx - orderData.status > 1)
       return `${orderStyles.incomplete} ${orderStyles.group}`;
   };
 
@@ -46,10 +63,10 @@ const order = () => {
         const res = await fetch(`${server}/api/orders/${queryId}`);
         const data = await res.json();
         const { status, ...rest } = data;
-        if (status === 'PAID') setOrderStatus(OrderStatusType.PAID);
+        /* if (status === 'PAID') setOrderStatus(OrderStatusType.PAID);
         if (status === 'PREPARING') setOrderStatus(OrderStatusType.PREPARING);
         if (status === 'ON THE WAY') setOrderStatus(OrderStatusType.ON_THE_WAY);
-        if (status === 'DELIVERED') setOrderStatus(OrderStatusType.DELIVERED);
+        if (status === 'DELIVERED') setOrderStatus(OrderStatusType.DELIVERED); */
 
         setInfo(rest);
         setIsLoading(false);
@@ -95,7 +112,7 @@ const order = () => {
             <p>{'$' + info.total.toFixed(2)}</p>
           </div>
         </div>
-        <div className={orderStyles.wrapper}>
+        <div className={`${orderStyles.wrapper} ${orderStyles.center}`}>
           <div className={statusClass(OrderStatusType.PAID)}>
             <Image src="/images/paid.png" alt="" width={48} height={48} />
             <p>Payment</p>
@@ -131,7 +148,7 @@ const order = () => {
           </div>
           <div className={statusClass(OrderStatusType.DELIVERED)}>
             <Image src="/images/delivered.png" alt="" width={48} height={48} />
-            <p>Delivered</p>
+            <p>Delivering</p>
             <Image
               src="/images/checked.png"
               alt=""
@@ -142,7 +159,11 @@ const order = () => {
           </div>
         </div>
       </section>
-      <OrderSummary cart={false} paid={orderStatus >= OrderStatusType.PAID} />
+      <OrderSummary
+        cart={false}
+        paid={orderData.status >= OrderStatusType.PAID}
+        orderStatus={orderData.status}
+      />
     </div>
   );
 };

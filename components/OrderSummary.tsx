@@ -10,22 +10,31 @@ import { useRouter } from 'next/router';
 import { reset } from '@/redux/cart/cartSlice';
 import OrderModal from './OrderModal';
 import { OrderType } from '@/models/Order';
+import { OrderStatusType } from '@/types/orderTypes';
 
 type OrderSummaryProps = {
   cart?: boolean;
   paid?: boolean;
+  orderStatus?: OrderStatusType;
 };
 
-const OrderSummary = ({ cart = true, paid = false }: OrderSummaryProps) => {
+const OrderSummary = ({
+  cart = true,
+  paid = false,
+  orderStatus,
+}: OrderSummaryProps) => {
   const { cartTotal, cartQuantity } = useAppSelector((state) => state.cart);
   const [discount, setDiscount] = useState(0);
   const [openCheckout, setOpenCheckout] = useState(false);
   const [openCashModal, setOpenCashModal] = useState(false);
 
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
+  const dispatch = useAppDispatch();
+
   const paypalRef = useRef<HTMLDivElement>(null);
+
+  console.log(orderStatus);
 
   useEffect(() => {
     if (!paypalRef.current) return;
@@ -110,7 +119,13 @@ const OrderSummary = ({ cart = true, paid = false }: OrderSummaryProps) => {
       {paid && (
         <div className={orderSummaryStyles.thank}>
           <h2>Thank you for ordering with Food Delivery!</h2>
-          <p>Keep track of your order on this page.</p>
+          {orderStatus !== undefined && (
+            <p>
+              {orderStatus < OrderStatusType.DELIVERED
+                ? 'Your order is in progress.'
+                : 'Your order has been delivered.'}
+            </p>
+          )}
         </div>
       )}
     </section>

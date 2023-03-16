@@ -40,7 +40,6 @@ const AddModal = ({ setShowModal }: AddModalProps) => {
     data.append('upload_preset', 'uploads');
 
     try {
-      console.log(process.env.NEXT_PUBLIC_CLOUDINARY_NAME);
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
         data
@@ -64,7 +63,6 @@ const AddModal = ({ setShowModal }: AddModalProps) => {
     };
     try {
       const res = await axios.post(`${server}/api/products`, productData);
-      console.log(res.data);
       setShowModal(false);
       router.reload();
     } catch (error) {

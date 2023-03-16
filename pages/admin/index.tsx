@@ -14,7 +14,12 @@ type AdminProps = {
 };
 
 const admin = ({ products, orders }: AdminProps) => {
-  const orderStatusOptions = ['preparing', 'on the way', 'delivered'];
+  const orderStatusOptions = [
+    'preparing',
+    'on the way',
+    'delivering',
+    'order complete',
+  ];
   const [showModal, setShowModal] = useState(false);
   const [productInfos, setProductInfos] = useState(products);
   const [orderInfos, setOrderInfos] = useState(orders);
@@ -56,11 +61,28 @@ const admin = ({ products, orders }: AdminProps) => {
       const res = await axios.put(`${server}/api/orders/${updateOrder._id}`, {
         status: updateOrder.status + 1,
       });
-      const newOrders = [
+      const updateItemIdx = orderInfos.findIndex(
+        (order) => order._id === updateOrder._id
+      );
+
+      let newOrderInfos = [];
+
+      // remove the original item and replace with new updated one while keeping order
+      if (updateItemIdx === 0) {
+        newOrderInfos = [res.data, ...orderInfos.slice(1)];
+      } else {
+        newOrderInfos = [
+          ...orderInfos.slice(0, updateItemIdx),
+          res.data,
+          ...orderInfos.slice(updateItemIdx + 1),
+        ];
+      }
+      console.log(newOrderInfos);
+      /* const newOrders = [
         res.data,
         ...orderInfos.filter((order) => updateOrder._id !== order._id),
-      ];
-      setOrderInfos(newOrders);
+      ]; */
+      setOrderInfos(newOrderInfos);
     } catch (error) {
       console.log(error);
     }
@@ -169,7 +191,7 @@ const admin = ({ products, orders }: AdminProps) => {
                 </td>
                 <td>
                   <div className={adminStyles.tableBtns}>
-                    {order.status < OrderStatusType.ON_THE_WAY && (
+                    {order.status < OrderStatusType.DELIVERED && (
                       <button
                         className={adminStyles.next}
                         onClick={() => handleNextStage(order)}
