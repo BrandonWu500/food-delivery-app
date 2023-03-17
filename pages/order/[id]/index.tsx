@@ -27,7 +27,7 @@ const fetcher = async (url: any) => {
   }
 };
 
-const order = () => {
+const Order = () => {
   const router = useRouter();
   const queryId = router.query.id;
   const { data: orderData, error } = useSWR(
@@ -168,4 +168,4 @@ const order = () => {
   );
 };
 
-export default order;
+export default Order;

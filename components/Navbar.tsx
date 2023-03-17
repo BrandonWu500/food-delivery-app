@@ -13,7 +13,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [dispatch]);
 
   return (
     <nav className={navStyles.container}>

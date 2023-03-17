@@ -28,7 +28,7 @@ type CartProps = {
 
 const HEADERS = ['item', 'name', 'extras', 'price', 'quantity', 'total'];
 
-const cart = (/* { cart }: CartProps */) => {
+const Cart = (/* { cart }: CartProps */) => {
   const { products } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
@@ -67,7 +67,13 @@ const cart = (/* { cart }: CartProps */) => {
                   <div className={cartStyles.wrapper}>
                     <Link href={`/product/${item._id}`}>
                       {item.img && (
-                        <Image src={item.img} alt="" width={64} height={64} style={{objectFit: 'contain'}}/>
+                        <Image
+                          src={item.img}
+                          alt=""
+                          width={64}
+                          height={64}
+                          style={{ objectFit: 'contain' }}
+                        />
                       )}
                     </Link>
                   </div>
@@ -126,4 +132,4 @@ const cart = (/* { cart }: CartProps */) => {
   };
 }; */
 
-export default cart;
+export default Cart;

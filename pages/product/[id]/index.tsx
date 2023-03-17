@@ -20,7 +20,7 @@ type ProductProps = {
   product: ProductType;
 };
 
-const product = ({ product }: ProductProps) => {
+const Product = ({ product }: ProductProps) => {
   const [selectedSize, setSelectedSize] = useState(SizeType.SMALL);
   const [price, setPrice] = useState(product.prices[0]);
   const [extras, setExtras] = useState<ProductOptionType[]>([]);
@@ -170,4 +170,4 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
-export default product;
+export default Product;

@@ -11,7 +11,7 @@ type ProductsProps = {
   isAdmin: boolean;
 };
 
-const products = ({ items, isAdmin }: ProductsProps) => {
+const Products = ({ items, isAdmin }: ProductsProps) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className={productsPageStyles.container}>
@@ -42,4 +42,4 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
-export default products;
+export default Products;

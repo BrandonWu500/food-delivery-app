@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 
-const login = () => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -48,4 +48,4 @@ const login = () => {
     </div>
   );
 };
-export default login;
+export default Login;

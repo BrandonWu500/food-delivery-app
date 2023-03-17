@@ -14,7 +14,7 @@ type AdminProps = {
   orders: OrderSchemaType[];
 };
 
-const admin = ({ products, orders }: AdminProps) => {
+const Admin = ({ products, orders }: AdminProps) => {
   const orderStatusOptions = [
     'preparing',
     'on the way',
@@ -239,4 +239,4 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
-export default admin;
+export default Admin;

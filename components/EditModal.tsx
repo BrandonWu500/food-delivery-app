@@ -32,7 +32,7 @@ const EditModal = ({
       ...editProductRef.current,
       pricesStr: editProductRef.current.prices.join(', '),
     });
-  }, [editProductRef.current]);
+  }, [editProductRef]);
 
   useEffect(() => {
     if (!modalRef.current) return;

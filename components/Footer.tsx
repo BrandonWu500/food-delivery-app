@@ -27,7 +27,7 @@ const Footer = () => {
         fetchData();
       }
     }
-  }, []);
+  }, [locations.length]);
 
   return (
     <div className={footerStyles.container}>
