@@ -1,4 +1,4 @@
-# food-delivery-app-frontend
+# food-delivery-app-fullstack-app
 
 ## What I Learned / Gained Experience With
 
@@ -7,6 +7,11 @@
 - Module Sass
 - Mobile Responsive Design
 - CSS Animations
+- MongoDB
+- Redux
+- Cloudinary
+- SWR React Hook
+- cookies
 
 ## App Features
 
@@ -15,13 +20,21 @@
 - Cart page that calculates total user needs to pay
 - Order progress page that shows the progress of their food delivery
 - Mobile responsive
+- localStorage cart with instant updates when adding and deleting items
+- Modals
+  - confirm clear cart
+  - cash on delivery
+  - add item to db
+  - edit item in db
+- Admin Dashboard Page with redirect to admin login if cookies aren't valid
+- Next stage button on admin dashboard which allows admin to advance order status and give user realtime feedback with swr
 
 ## Future Improvements
 
-- Add backend (MongoDB with Next Api Handler and Mongoose)
-- Add payment service
-- Add redux for state management
+- adding the option to add, edit, and remove extras from products in the edit item modal
+- fixing size options so they better correspond to the specific item
+- adding a users model and account system with a rewards program
 
 ### Learn More About the Project on my Portfolio Website
 
-https://brandon-wu500-github-hcaiflf7y-brandonwu500.vercel.app/
+https://brandonwu500.vercel.app/projects/foodDeliveryFullStack
