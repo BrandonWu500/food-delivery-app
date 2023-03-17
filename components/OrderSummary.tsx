@@ -2,8 +2,6 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import orderSummaryStyles from '@/styles/OrderSummary.module.scss';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import ButtonWrapper from '@/lib/ButtonWrapper';
 import axios from 'axios';
 import { server } from '@/config';
 import { useRouter } from 'next/router';
@@ -33,8 +31,6 @@ const OrderSummary = ({
   const dispatch = useAppDispatch();
 
   const paypalRef = useRef<HTMLDivElement>(null);
-
-  console.log(orderStatus);
 
   useEffect(() => {
     if (!paypalRef.current) return;
@@ -91,22 +87,6 @@ const OrderSummary = ({
             >
               CASH ON DELIVERY
             </button>
-            <PayPalScriptProvider
-              options={{
-                'client-id':
-                  'AT9gkKkn2KIGrL4HrOh3CAWhkSRnnmjoDhAjOiu3c40XresJAf1bAtZrTYf4ePQmknqgjSpakmD-ya9u',
-                components: 'buttons',
-                currency: 'USD',
-                'disable-funding': 'card',
-              }}
-            >
-              <ButtonWrapper
-                currency="USD"
-                showSpinner={true}
-                makeOrder={makeOrder}
-                amount={cartTotal}
-              />
-            </PayPalScriptProvider>
           </div>
           <OrderModal
             amount={cartTotal}
