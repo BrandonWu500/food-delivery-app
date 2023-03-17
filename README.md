@@ -1,4 +1,4 @@
-# food-delivery-app-fullstack-app
+# food-delivery-fullstack-app
 
 ## What I Learned / Gained Experience With
 
