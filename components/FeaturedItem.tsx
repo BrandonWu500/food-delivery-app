@@ -28,7 +28,13 @@ const FeaturedItem = ({ title, img, slideActive }: FeaturedItemProps) => {
         </div>
       </div>
       <div className={featuredStyles.imgContainer}>
-        <Image src={img} alt="" fill style={{ objectFit: 'contain' }} />
+        <Image
+          src={img}
+          alt=""
+          fill
+          style={{ objectFit: 'contain' }}
+          priority
+        />
       </div>
     </div>
   );

@@ -58,13 +58,13 @@ const Featured = () => {
         className={featuredStyles.arrowContainer}
         onClick={() => handleClick('left')}
       >
-        <Image src="/images/arrowl.png" alt="left arrow" fill />
+        <Image src="/images/arrowl.png" alt="left arrow" fill priority />
       </button>
       <button
         className={featuredStyles.arrowContainer}
         onClick={() => handleClick('right')}
       >
-        <Image src="/images/arrowr.png" alt="right arrow" fill />
+        <Image src="/images/arrowr.png" alt="right arrow" fill priority />
       </button>
       <div className={featuredStyles.content}>
         {featuredItems.map((item, idx) => (

@@ -72,7 +72,7 @@ const Product = ({ product }: ProductProps) => {
       <Meta title={capitalize(product.title)} description={product.desc} />
       <div className={productPageStyles.container}>
         <div className={productPageStyles.imgContainer}>
-          <Image src={product.img} alt="" width={500} height={500} />
+          <Image src={product.img} alt="" width={500} height={500} priority />
         </div>
         <div className={productPageStyles.textContainer}>
           <h1>{product.title.toUpperCase()}</h1>
