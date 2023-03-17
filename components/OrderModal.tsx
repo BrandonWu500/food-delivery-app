@@ -66,6 +66,7 @@ const OrderModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              value={formData.name}
             />
           </div>
           <div className={orderModalStyles.formGroup}>
@@ -78,6 +79,7 @@ const OrderModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, phone: e.target.value })
               }
+              value={formData.phone}
             />
           </div>
           <div className={orderModalStyles.formGroup}>
@@ -89,6 +91,7 @@ const OrderModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
               }
+              value={formData.address}
             ></textarea>
           </div>
           <div className={orderModalStyles.btns}>
