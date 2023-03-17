@@ -6,6 +6,7 @@ import adminStyles from '@/styles/Admin.module.scss';
 import { OrderStatusType, PaymentMethodType } from '@/types/orderTypes';
 import axios from 'axios';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 
 type AdminProps = {
@@ -77,7 +78,8 @@ const admin = ({ products, orders }: AdminProps) => {
           ...orderInfos.slice(updateItemIdx + 1),
         ];
       }
-      console.log(newOrderInfos);
+
+      // original solution which puts updated item at top of table
       /* const newOrders = [
         res.data,
         ...orderInfos.filter((order) => updateOrder._id !== order._id),
@@ -106,13 +108,15 @@ const admin = ({ products, orders }: AdminProps) => {
               <tr key={idx}>
                 <td>
                   <div>
-                    <Image
-                      src={product.img}
-                      alt=""
-                      width={64}
-                      height={64}
-                      style={{ objectFit: 'contain' }}
-                    />
+                    <Link href={`/product/${product._id}`}>
+                      <Image
+                        src={product.img}
+                        alt=""
+                        width={64}
+                        height={64}
+                        style={{ objectFit: 'contain' }}
+                      />
+                    </Link>
                   </div>
                 </td>
                 <td>

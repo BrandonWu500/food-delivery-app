@@ -55,7 +55,7 @@ const OrderModal = ({
     <div className={orderModalStyles.container}>
       <div className={orderModalStyles.overlay} ref={cashRef}>
         <form className={orderModalStyles.modal} onSubmit={handleSubmit}>
-          <h1>{`You will pay $${amount} upon delivery.`}</h1>
+          <h1>{`You will pay $${amount.toFixed(2)} upon delivery.`}</h1>
           <div className={orderModalStyles.formGroup}>
             <label htmlFor="name">Name</label>
             <input

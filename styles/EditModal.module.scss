@@ -21,7 +21,8 @@
       flex-direction: column;
       gap: 0.5em;
 
-      input[type='text'] {
+      input[type='text'],
+      textarea {
         padding: 0.5em;
         font-size: 1rem;
       }

@@ -67,7 +67,7 @@ const cart = (/* { cart }: CartProps */) => {
                   <div className={cartStyles.wrapper}>
                     <Link href={`/product/${item._id}`}>
                       {item.img && (
-                        <Image src={item.img} alt="" width={64} height={64} />
+                        <Image src={item.img} alt="" width={64} height={64} style={{objectFit: 'contain'}}/>
                       )}
                     </Link>
                   </div>

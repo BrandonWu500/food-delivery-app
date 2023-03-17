@@ -65,10 +65,26 @@
       padding: 0.5em 1em;
       border-radius: 50vh;
       font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 1em;
     }
 
     .addExtra {
       padding: 5px;
+    }
+
+    .delExtra {
+      background-color: $bg-primary-light;
+      color: $text-primary-color;
+      width: 2rem;
+      height: 2rem;
+      border: 0;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     button {

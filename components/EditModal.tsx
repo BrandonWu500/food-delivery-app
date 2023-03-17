@@ -3,7 +3,7 @@ import { ProductType } from '@/models/Product';
 import editModalStyles from '@/styles/EditModal.module.scss';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 
 type EditModalProps = {
   editProductRef: any;
@@ -114,6 +114,17 @@ const EditModal = ({
                     setProduct({ ...product, title: e.target.value })
                   }
                 />
+              </div>
+              <div className={editModalStyles.formGroup}>
+                <label htmlFor="desc">Description</label>
+                <textarea
+                  name="desc"
+                  id="desc"
+                  value={product.desc}
+                  onChange={(e) =>
+                    setProduct({ ...product, desc: e.target.value })
+                  }
+                ></textarea>
               </div>
               <div className={editModalStyles.formGroup}>
                 <label htmlFor="prices">{`Prices (separate with comma and 1 space)`}</label>

@@ -2,13 +2,11 @@ import Meta from '@/components/Meta';
 import { server } from '@/config';
 import productPageStyles from '@/styles/ProductPage.module.scss';
 import Image from 'next/image';
-import sizeImg from '@/public/images/size.png';
 import { ChangeEvent, useState } from 'react';
 import axios from 'axios';
 import { ProductType } from '@/models/Product';
 import { capitalize } from '@/util/capitalize';
 import { ProductOptionType } from '@/types/productTypes';
-import { Types } from 'mongoose';
 import { useAppDispatch } from '@/redux/hooks';
 import { addProduct } from '@/redux/cart/cartSlice';
 
@@ -78,7 +76,7 @@ const product = ({ product }: ProductProps) => {
         </div>
         <div className={productPageStyles.textContainer}>
           <h1>{product.title.toUpperCase()}</h1>
-          <p className={productPageStyles.price}>{'$' + price}</p>
+          <p className={productPageStyles.price}>{'$' + price.toFixed(2)}</p>
           <p>{product.desc}</p>
 
           <div className={productPageStyles.wrapper}>
@@ -89,7 +87,7 @@ const product = ({ product }: ProductProps) => {
                 onClick={() => handleSizeClick(SizeType.SMALL)}
               >
                 <Image
-                  src={sizeImg}
+                  src={product.img}
                   alt=""
                   width={48}
                   height={48}
@@ -102,7 +100,7 @@ const product = ({ product }: ProductProps) => {
                 onClick={() => handleSizeClick(SizeType.MEDIUM)}
               >
                 <Image
-                  src={sizeImg}
+                  src={product.img}
                   alt=""
                   width={64}
                   height={64}
@@ -115,7 +113,7 @@ const product = ({ product }: ProductProps) => {
                 onClick={() => handleSizeClick(SizeType.LARGE)}
               >
                 <Image
-                  src={sizeImg}
+                  src={product.img}
                   alt=""
                   width={96}
                   height={96}

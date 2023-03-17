@@ -170,13 +170,26 @@ const AddModal = ({ setShowModal }: AddModalProps) => {
         </div>
         <div className={addModalStyles.formGroup}>
           <h3>Current Extras:</h3>
-          <p className={addModalStyles.extras}>
+          <div className={addModalStyles.extras}>
             {extras.map((item, idx) => (
-              <span className={addModalStyles.extra} key={idx}>
+              <div className={addModalStyles.extra} key={idx}>
                 {item.name}: ${item.price.toFixed(2)}
-              </span>
+                <button
+                  type="button"
+                  className={addModalStyles.delExtra}
+                  onClick={() =>
+                    setExtras(
+                      extras.filter(
+                        (extraItem) => extraItem.name !== extra.name
+                      )
+                    )
+                  }
+                >
+                  X
+                </button>
+              </div>
             ))}
-          </p>
+          </div>
         </div>
         <button type="submit" className={addModalStyles.create}>
           Create
